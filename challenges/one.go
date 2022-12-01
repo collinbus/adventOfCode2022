@@ -1,30 +1,32 @@
 package challenges
 
 import (
+	"fmt"
 	"github.com/gammazero/deque"
 	"strconv"
 )
 
 func challengeOne(calories []string) int {
-	mostCalories := 0
-	carryingCalories := 0
-
-	for _, caloryString := range calories {
-		if caloryString == "" {
-			if carryingCalories > mostCalories {
-				mostCalories = carryingCalories
-			}
-			carryingCalories = 0
-		} else {
-			calory, _ := strconv.Atoi(caloryString)
-			carryingCalories += calory
-		}
-	}
-
-	return mostCalories
+	top3mostCalories := getTop3MostCalories(calories)
+	return top3mostCalories.At(0)
 }
 
-func challengeOnePartTwo(calories []string) *deque.Deque[int] {
+func challengeOnePartTwo(calories []string) int {
+	sumOfCalories := 0
+	top3mostCalories := getTop3MostCalories(calories)
+
+	for i := 0; i < top3mostCalories.Len(); i++ {
+		calory := top3mostCalories.At(i)
+		fmt.Printf("Elf %d is carrying %d\n", 1+i, calory)
+		sumOfCalories += calory
+	}
+
+	fmt.Printf("The sum of the top three calories is %d\n", sumOfCalories)
+
+	return sumOfCalories
+}
+
+func getTop3MostCalories(calories []string) *deque.Deque[int] {
 	mostCalories := deque.New[int](3)
 	mostCalories.PushBack(0)
 	mostCalories.PushBack(0)
