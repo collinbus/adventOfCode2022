@@ -20,6 +20,21 @@ func TestChallengeOne(t *testing.T) {
 	}
 }
 
+func TestChallengeOnePartTwo(t *testing.T) {
+	calories := readInputFromFile()
+
+	mostCalories := challengeOnePartTwo(calories)
+	sumOfCalories := 0
+
+	for i := 0; i < mostCalories.Len(); i++ {
+		calory := mostCalories.At(i)
+		fmt.Println(calory)
+		sumOfCalories += calory
+	}
+
+	fmt.Println(sumOfCalories)
+}
+
 func readInputFromFile() []string {
 	var content []string
 	file, err := os.Open("input-one")
