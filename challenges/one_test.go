@@ -22,17 +22,22 @@ func TestChallengeOne(t *testing.T) {
 
 func TestChallengeOnePartTwo(t *testing.T) {
 	calories := readInputFromFile()
+	expectedSumOfCalories := 204610
 
 	mostCalories := challengeOnePartTwo(calories)
 	sumOfCalories := 0
 
 	for i := 0; i < mostCalories.Len(); i++ {
 		calory := mostCalories.At(i)
-		fmt.Println(calory)
+		fmt.Printf("Elf %d is carrying %d\n", 1+i, calory)
 		sumOfCalories += calory
 	}
 
-	fmt.Println(sumOfCalories)
+	fmt.Printf("The sum of the top three calories is %d\n", sumOfCalories)
+
+	if sumOfCalories != expectedSumOfCalories {
+		t.Fatalf("%d is not the amount of the top 3 elves carrying calories", mostCalories)
+	}
 }
 
 func readInputFromFile() []string {
