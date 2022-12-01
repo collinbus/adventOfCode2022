@@ -10,10 +10,14 @@ import (
 
 func TestChallengeOne(t *testing.T) {
 	calories := readInputFromFile()
+	expectedMostCalories := 70374
 
 	mostCalories := challengeOne(calories)
-
 	fmt.Println(mostCalories)
+
+	if mostCalories != expectedMostCalories {
+		t.Fatalf("%d is not the amount of calories the elf with the most calories is carrying", mostCalories)
+	}
 }
 
 func readInputFromFile() []string {
