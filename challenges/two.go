@@ -3,8 +3,8 @@ package challenges
 import "strings"
 
 type Game struct {
-	yourHand  string
-	otherHand string
+	firstSore   string
+	secondScore string
 }
 
 type Score struct {
@@ -35,23 +35,23 @@ func (game Game) result() int {
 		drawingHand: "Z",
 	}
 
-	currentScore := scoreTable[game.yourHand]
+	currentScore := scoreTable[game.firstSore]
 	ownHandScore := game.getOwnHandScore()
-	resultScore := game.getResultScore(currentScore)
+	resultScore := game.getResultScore(game.secondScore, currentScore)
 	return ownHandScore + resultScore
 }
 
-func (game Game) getResultScore(currentScore Score) int {
-	if game.otherHand == currentScore.winningHand {
+func (game Game) getResultScore(yourScore string, targetScore Score) int {
+	if yourScore == targetScore.winningHand {
 		return 6
-	} else if game.otherHand == currentScore.drawingHand {
+	} else if yourScore == targetScore.drawingHand {
 		return 3
 	}
 	return 0
 }
 
 func (game Game) getOwnHandScore() int {
-	switch game.otherHand {
+	switch game.secondScore {
 	case "X":
 		return 1
 	case "Y":
@@ -66,8 +66,8 @@ func challengeTwo(scores []string) int {
 	for _, score := range scores {
 		splittedScore := strings.Split(score, " ")
 		game := &Game{
-			yourHand:  splittedScore[0],
-			otherHand: splittedScore[1],
+			firstSore:   splittedScore[0],
+			secondScore: splittedScore[1],
 		}
 		ownScore += game.result()
 	}
