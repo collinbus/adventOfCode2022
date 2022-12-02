@@ -3,45 +3,49 @@ package challenges
 import "strings"
 
 type Game struct {
-	firstSore   string
-	secondScore string
+	firstSore   int
+	secondScore int
 }
 
 type Score struct {
-	winningHand string
-	losingHand  string
-	drawingHand string
+	winningHand int
+	losingHand  int
+	drawingHand int
 }
 
 type RockPaperScissorGame interface {
 	result() int
 }
 
+const PAPER = 1
+const SCISSORS = 2
+const ROCK = 3
+
 func (game Game) result() int {
-	scoreTable := make(map[string]Score)
-	scoreTable["A"] = Score{
-		winningHand: "Y",
-		losingHand:  "Z",
-		drawingHand: "X",
+	scoreTable := make(map[int]Score)
+	scoreTable[PAPER] = Score{
+		winningHand: SCISSORS,
+		losingHand:  ROCK,
+		drawingHand: PAPER,
 	}
-	scoreTable["B"] = Score{
-		winningHand: "Z",
-		losingHand:  "X",
-		drawingHand: "Y",
+	scoreTable[SCISSORS] = Score{
+		winningHand: ROCK,
+		losingHand:  PAPER,
+		drawingHand: SCISSORS,
 	}
-	scoreTable["C"] = Score{
-		winningHand: "X",
-		losingHand:  "Y",
-		drawingHand: "Z",
+	scoreTable[ROCK] = Score{
+		winningHand: PAPER,
+		losingHand:  SCISSORS,
+		drawingHand: ROCK,
 	}
 
 	currentScore := scoreTable[game.firstSore]
-	ownHandScore := game.getOwnHandScore()
+	ownHandScore := game.getOwnHandScore(game.secondScore)
 	resultScore := game.getResultScore(game.secondScore, currentScore)
 	return ownHandScore + resultScore
 }
 
-func (game Game) getResultScore(yourScore string, targetScore Score) int {
+func (game Game) getResultScore(yourScore int, targetScore Score) int {
 	if yourScore == targetScore.winningHand {
 		return 6
 	} else if yourScore == targetScore.drawingHand {
@@ -50,15 +54,24 @@ func (game Game) getResultScore(yourScore string, targetScore Score) int {
 	return 0
 }
 
-func (game Game) getOwnHandScore() int {
-	switch game.secondScore {
-	case "X":
+func (game Game) getOwnHandScore(score int) int {
+	switch score {
+	case ROCK:
 		return 1
-	case "Y":
+	case PAPER:
 		return 2
 	default:
 		return 3
 	}
+}
+
+func getGameValue(input string) int {
+	if input == "B" || input == "Y" {
+		return PAPER
+	} else if input == "C" || input == "Z" {
+		return SCISSORS
+	}
+	return ROCK
 }
 
 func challengeTwo(scores []string) int {
@@ -66,8 +79,8 @@ func challengeTwo(scores []string) int {
 	for _, score := range scores {
 		splittedScore := strings.Split(score, " ")
 		game := &Game{
-			firstSore:   splittedScore[0],
-			secondScore: splittedScore[1],
+			firstSore:   getGameValue(splittedScore[0]),
+			secondScore: getGameValue(splittedScore[1]),
 		}
 		ownScore += game.result()
 	}
