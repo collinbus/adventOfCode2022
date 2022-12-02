@@ -22,6 +22,15 @@ const SCISSORS = 2
 const ROCK = 3
 
 func (game Game) result() int {
+	scoreTable := getScoreTable()
+
+	currentScore := scoreTable[game.firstSore]
+	ownHandScore := game.getOwnHandScore(game.secondScore)
+	resultScore := game.getResultScore(game.secondScore, currentScore)
+	return ownHandScore + resultScore
+}
+
+func getScoreTable() map[int]Score {
 	scoreTable := make(map[int]Score)
 	scoreTable[PAPER] = Score{
 		winningHand: SCISSORS,
@@ -38,11 +47,7 @@ func (game Game) result() int {
 		losingHand:  SCISSORS,
 		drawingHand: ROCK,
 	}
-
-	currentScore := scoreTable[game.firstSore]
-	ownHandScore := game.getOwnHandScore(game.secondScore)
-	resultScore := game.getResultScore(game.secondScore, currentScore)
-	return ownHandScore + resultScore
+	return scoreTable
 }
 
 func (game Game) getResultScore(yourScore int, targetScore Score) int {
