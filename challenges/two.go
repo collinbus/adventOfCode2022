@@ -91,3 +91,24 @@ func challengeTwo(scores []string) int {
 	}
 	return ownScore
 }
+
+func challengeTwoPartTwo(scores []string) int {
+	ownScore := 0
+	for _, score := range scores {
+		splittedScore := strings.Split(score, " ")
+		game := &Game{
+			firstSore: getGameValue(splittedScore[0]),
+		}
+		scoreTable := getScoreTable()
+		currentScore := scoreTable[game.firstSore]
+
+		game.secondScore = currentScore.winningHand
+		if splittedScore[1] == "X" {
+			game.secondScore = currentScore.losingHand
+		} else if splittedScore[1] == "Y" {
+			game.secondScore = currentScore.drawingHand
+		}
+		ownScore += game.result()
+	}
+	return ownScore
+}
