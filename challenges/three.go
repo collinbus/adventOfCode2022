@@ -6,18 +6,57 @@ import (
 
 func ChallengeThree(input []string) int {
 	sumPriorities := 0
-	lowerCaseScoreOffset := uint8(96)
-	upperCaseScoreOffset := uint8(38)
 
 	for _, ruckSack := range input {
 		duplicate := findDuplicateInRucksack(ruckSack)
-		if duplicate > lowerCaseScoreOffset {
-			sumPriorities += int(duplicate - lowerCaseScoreOffset)
-		} else {
-			sumPriorities += int(duplicate - upperCaseScoreOffset)
-		}
+		sumPriorities += calculateScore(duplicate)
 	}
 	return sumPriorities
+}
+
+func ChallengeThreePartTwo(input []string) int {
+	sumPriorities := 0
+	for i := 0; i < len(input); i += 3 {
+		duplicate := findDuplicateInSeries(input[i : i+3])
+		sumPriorities += calculateScore(duplicate)
+	}
+	return sumPriorities
+}
+
+func calculateScore(value uint8) int {
+	lowerCaseScoreOffset := uint8(96)
+	upperCaseScoreOffset := uint8(38)
+	if value > lowerCaseScoreOffset {
+		return int(value - lowerCaseScoreOffset)
+	} else {
+		return int(value - upperCaseScoreOffset)
+	}
+}
+
+func findDuplicateInSeries(ruckSack []string) uint8 {
+	items := make(map[uint8]int)
+	for i, _ := range ruckSack[0] {
+		item := ruckSack[0][i]
+		items[item] = 1
+	}
+	for i, _ := range ruckSack[1] {
+		item := ruckSack[1][i]
+		if occurrences, exists := items[item]; exists {
+			if occurrences == 1 {
+				items[item] = 2
+			}
+		}
+	}
+	for i, _ := range ruckSack[2] {
+		item := ruckSack[2][i]
+		if occurrences, exists := items[item]; exists {
+			if occurrences == 2 {
+				return item
+			}
+		}
+	}
+	log.Fatal("No doubles in series!")
+	return 0
 }
 
 func findDuplicateInRucksack(ruckSack string) uint8 {
