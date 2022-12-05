@@ -15,6 +15,11 @@ type Move struct {
 func challengeFive(input []string) string {
 	stacks, startMoveIndex := parseCrateInput(input)
 	stacks = performMovesCrateMover9000(stacks, input[startMoveIndex:])
+	topStackString := returnTopValues(stacks)
+	return topStackString
+}
+
+func returnTopValues(stacks []stack.Stack) string {
 	topStackString := ""
 	for _, currentStack := range stacks {
 		topStackString += currentStack.Peek().(string)
@@ -25,10 +30,7 @@ func challengeFive(input []string) string {
 func challengeFivePartTwo(input []string) string {
 	stacks, startMoveIndex := parseCrateInput(input)
 	stacks = performMovesCrateMover9001(stacks, input[startMoveIndex:])
-	topStackString := ""
-	for _, currentStack := range stacks {
-		topStackString += currentStack.Peek().(string)
-	}
+	topStackString := returnTopValues(stacks)
 	return topStackString
 }
 
