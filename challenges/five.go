@@ -14,7 +14,7 @@ type Move struct {
 
 func challengeFive(input []string) string {
 	stacks, startMoveIndex := parseCrateInput(input)
-	stacks = performMoves(stacks, input[startMoveIndex:])
+	stacks = performMovesCrateMover9000(stacks, input[startMoveIndex:])
 	topStackString := ""
 	for _, currentStack := range stacks {
 		topStackString += currentStack.Peek().(string)
@@ -22,7 +22,32 @@ func challengeFive(input []string) string {
 	return topStackString
 }
 
-func performMoves(stacks []stack.Stack, moves []string) []stack.Stack {
+func challengeFivePartTwo(input []string) string {
+	stacks, startMoveIndex := parseCrateInput(input)
+	stacks = performMovesCrateMover9001(stacks, input[startMoveIndex:])
+	topStackString := ""
+	for _, currentStack := range stacks {
+		topStackString += currentStack.Peek().(string)
+	}
+	return topStackString
+}
+
+func performMovesCrateMover9001(stacks []stack.Stack, moves []string) []stack.Stack {
+	for _, moveString := range moves {
+		move := parseMove(moveString)
+		elements := make([]string, 0)
+		for i := 0; i < move.amount; i++ {
+			element := stacks[move.from-1].Pop().(string)
+			elements = append(elements, element)
+		}
+		for i := len(elements) - 1; i >= 0; i-- {
+			stacks[move.to-1].Push(elements[i])
+		}
+	}
+	return stacks
+}
+
+func performMovesCrateMover9000(stacks []stack.Stack, moves []string) []stack.Stack {
 	for _, moveString := range moves {
 		move := parseMove(moveString)
 		for i := 0; i < move.amount; i++ {
