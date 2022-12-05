@@ -1,12 +1,13 @@
-package challenges
+package challengeOne
 
 import (
+	"adventOfCode2022/challenges"
 	"fmt"
 	"testing"
 )
 
 func TestChallengeOne(t *testing.T) {
-	calories := readInputFromFile("input-one")
+	calories := challenges.ReadInputFromFile("input-one")
 	expectedMostCalories := 70374
 
 	mostCalories := challengeOne(calories)
@@ -18,7 +19,7 @@ func TestChallengeOne(t *testing.T) {
 }
 
 func TestChallengeOnePartTwo(t *testing.T) {
-	calories := readInputFromFile("input-one")
+	calories := challenges.ReadInputFromFile("input-one")
 	expectedSumOfCalories := 204610
 
 	sumOfCalories := challengeOnePartTwo(calories)

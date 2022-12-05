@@ -1,4 +1,4 @@
-package challenges
+package challengeTwo
 
 import "strings"
 

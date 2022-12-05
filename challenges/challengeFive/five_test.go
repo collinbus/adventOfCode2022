@@ -1,13 +1,14 @@
-package challenges
+package challengeFive
 
 import (
+	"adventOfCode2022/challenges"
 	"fmt"
 	"testing"
 )
 
 func TestChallengeFive(t *testing.T) {
 	expectedTopCrates := "VGBBJCRMN"
-	input := readInputFromFile("input-five")
+	input := challenges.ReadInputFromFile("input-five")
 
 	topCrates := challengeFive(input)
 	fmt.Println(topCrates)
@@ -19,7 +20,7 @@ func TestChallengeFive(t *testing.T) {
 
 func TestChallengeFivePartTwo(t *testing.T) {
 	expectedTopCrates := "LBBVJBRMH"
-	input := readInputFromFile("input-five")
+	input := challenges.ReadInputFromFile("input-five")
 
 	topCrates := challengeFivePartTwo(input)
 	fmt.Println(topCrates)

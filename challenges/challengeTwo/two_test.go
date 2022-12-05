@@ -1,13 +1,14 @@
-package challenges
+package challengeTwo
 
 import (
+	"adventOfCode2022/challenges"
 	"fmt"
 	"testing"
 )
 
 func TestChallengeTwo(t *testing.T) {
 	expectedEndScore := 12794
-	scores := readInputFromFile("input-two")
+	scores := challenges.ReadInputFromFile("input-two")
 
 	endScore := challengeTwo(scores)
 	fmt.Println(endScore)
@@ -19,7 +20,7 @@ func TestChallengeTwo(t *testing.T) {
 
 func TestChallengeTwoPartTwo(t *testing.T) {
 	expectedEndScore := 14979
-	scores := readInputFromFile("input-two")
+	scores := challenges.ReadInputFromFile("input-two")
 
 	endScore := challengeTwoPartTwo(scores)
 	fmt.Println(endScore)

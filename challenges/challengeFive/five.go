@@ -1,4 +1,4 @@
-package challenges
+package challengeFive
 
 import (
 	"github.com/golang-collections/collections/stack"

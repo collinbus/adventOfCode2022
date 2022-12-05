@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func readInputFromFile(fileName string) []string {
+func ReadInputFromFile(fileName string) []string {
 	var content []string
 	file, err := os.Open(fileName)
 	if err != nil {

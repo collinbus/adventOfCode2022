@@ -1,12 +1,13 @@
-package challenges
+package challengeFour
 
 import (
+	"adventOfCode2022/challenges"
 	"fmt"
 	"testing"
 )
 
 func TestChallengeFour(t *testing.T) {
-	input := readInputFromFile("input-four")
+	input := challenges.ReadInputFromFile("input-four")
 
 	solelyContainedPairs := challengeFour(input)
 	fmt.Println(solelyContainedPairs)
@@ -34,7 +35,7 @@ func TestChallengeFourExtraInput(t *testing.T) {
 }
 
 func TestChallengeFourPartTwo(t *testing.T) {
-	input := readInputFromFile("input-four")
+	input := challenges.ReadInputFromFile("input-four")
 
 	partiallyContainedPairs := challengeFourPartTwo(input)
 	fmt.Println(partiallyContainedPairs)

@@ -1,4 +1,4 @@
-package challenges
+package challengeThree
 
 import (
 	"log"
@@ -35,11 +35,11 @@ func calculateScore(value uint8) int {
 
 func findDuplicateInSeries(ruckSack []string) uint8 {
 	items := make(map[uint8]int)
-	for i, _ := range ruckSack[0] {
+	for i := range ruckSack[0] {
 		item := ruckSack[0][i]
 		items[item] = 1
 	}
-	for i, _ := range ruckSack[1] {
+	for i := range ruckSack[1] {
 		item := ruckSack[1][i]
 		if occurrences, exists := items[item]; exists {
 			if occurrences == 1 {
@@ -47,7 +47,7 @@ func findDuplicateInSeries(ruckSack []string) uint8 {
 			}
 		}
 	}
-	for i, _ := range ruckSack[2] {
+	for i := range ruckSack[2] {
 		item := ruckSack[2][i]
 		if occurrences, exists := items[item]; exists {
 			if occurrences == 2 {

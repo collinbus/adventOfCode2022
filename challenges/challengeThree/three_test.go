@@ -1,13 +1,14 @@
-package challenges
+package challengeThree
 
 import (
+	"adventOfCode2022/challenges"
 	"fmt"
 	"testing"
 )
 
 func TestChallengeThree(t *testing.T) {
 	expectedPriorities := 7727
-	input := readInputFromFile("input-three")
+	input := challenges.ReadInputFromFile("input-three")
 
 	priorities := ChallengeThree(input)
 	fmt.Println(priorities)
@@ -19,7 +20,7 @@ func TestChallengeThree(t *testing.T) {
 
 func TestChallengeThreePartTwo(t *testing.T) {
 	expectedPriorities := 2609
-	input := readInputFromFile("input-three")
+	input := challenges.ReadInputFromFile("input-three")
 
 	priorities := ChallengeThreePartTwo(input)
 	fmt.Println(priorities)
