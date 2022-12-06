@@ -17,3 +17,15 @@ func TestChallengeSix(t *testing.T) {
 		t.Fatalf("%d is not the correct index of the first character available\n", firstCharacterAvailable)
 	}
 }
+
+func TestChallengeSixPartTwo(t *testing.T) {
+	expectedFirstCharacterAvailable := 2414
+	input := challenges.ReadInputFromFile("input-six")
+
+	firstCharacterAvailable := challengeSixPartTwo(input[0])
+	fmt.Println(firstCharacterAvailable)
+
+	if firstCharacterAvailable != expectedFirstCharacterAvailable {
+		t.Fatalf("%d is not the correct index of the first character available\n", firstCharacterAvailable)
+	}
+}
