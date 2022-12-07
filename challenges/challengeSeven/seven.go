@@ -116,6 +116,39 @@ func challengeSeven(input []string) int {
 	return sizes
 }
 
+func challengeSevenPartTwo(input []string) int {
+	root := NewDirectory("/", nil)
+	currentDir := root
+
+	for i := 1; i < len(input); i++ {
+		command := parseCommand(input[i])
+		if command == COMMAND_OUTPUT {
+			currentDir.updateContent(input[i])
+		}
+		if command == CHANGE_DIRECTORY {
+			currentDir = currentDir.goToDirectory(input[i][5:])
+		}
+	}
+
+	calculateFileSizes(root)
+	freeSpace := 70000000 - root.size
+	neededSpace := 30000000 - freeSpace
+	fmt.Printf("Needed space: %d\n", neededSpace)
+	smallestDirectorySpace := findSmallestDirectoryToDelete(neededSpace, root.size, root)
+	root.printFilesAndDirectories(0)
+	return smallestDirectorySpace
+}
+
+func findSmallestDirectoryToDelete(minSize int, smallestSize int, currentLocation *FileLocation) int {
+	for _, dir := range currentLocation.directories {
+		if dir.size > minSize && dir.size < smallestSize {
+			smallestSize = dir.size
+		}
+		smallestSize = findSmallestDirectoryToDelete(minSize, smallestSize, dir)
+	}
+	return smallestSize
+}
+
 func selectRemovableDirectories(fileLocation *FileLocation, size int) int {
 	if fileLocation.isDirectory {
 		for _, dir := range fileLocation.directories {
