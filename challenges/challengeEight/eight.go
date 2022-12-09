@@ -18,16 +18,85 @@ func challengeEight(input []string) int {
 	return visibleTrees
 }
 
+func challengeEightPartTwo(input []string) int {
+	treeMap := createMap(input)
+	countInnerVisibleTrees(treeMap)
+	highestScenicScore := calculateHighestScenicScore(treeMap)
+	return highestScenicScore
+}
+
+func calculateHighestScenicScore(treeMap [][]*Tree) int {
+	highestSceneryScore := 0
+	for row := 0; row < len(treeMap); row++ {
+		for col := 0; col < len(treeMap[row]); col++ {
+			score := calculateSceneryScore(treeMap, row, col)
+			if score > highestSceneryScore {
+				highestSceneryScore = score
+			}
+		}
+	}
+	return highestSceneryScore
+}
+
+func calculateSceneryScore(treeMap [][]*Tree, row int, col int) int {
+	score := 1
+	current := treeMap[row][col]
+	distance := 0
+	for i := col - 1; i >= 0; i-- {
+		distance++
+		if treeMap[row][i].height >= current.height {
+			break
+		}
+	}
+
+	score *= distance
+
+	distance = 0
+	for i := col + 1; i < len(treeMap[row]); i++ {
+		distance++
+		if treeMap[row][i].height >= current.height {
+			break
+		}
+	}
+
+	score *= distance
+
+	distance = 0
+	for i := row - 1; i >= 0; i-- {
+		distance++
+		if treeMap[i][col].height >= current.height {
+			break
+		}
+	}
+
+	score *= distance
+
+	distance = 0
+	for i := row + 1; i < len(treeMap); i++ {
+		distance++
+		if treeMap[i][col].height >= current.height {
+			break
+		}
+	}
+
+	score *= distance
+
+	return score
+}
+
 func countInnerVisibleTrees(treeMap [][]*Tree) int {
 	visibleTrees := 0
 	for row := 0; row < len(treeMap); row++ {
 		for col := 0; col < len(treeMap[row]); col++ {
+			treeMap[row][col].visible = true
 			if row == 0 || row == len(treeMap)-1 {
 				visibleTrees++
 			} else if col == 0 || col == len(treeMap[row])-1 {
 				visibleTrees++
 			} else if isVisible(treeMap, row, col) {
 				visibleTrees++
+			} else {
+				treeMap[row][col].visible = false
 			}
 		}
 	}
